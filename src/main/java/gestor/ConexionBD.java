@@ -5,7 +5,6 @@ public class ConexionBD {
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private Connection conexion;
-
     public Connection getConnection() {
         try {
             if (conexion == null || conexion.isClosed()) {
@@ -16,7 +15,6 @@ public class ConexionBD {
         }
         return conexion;
     }
-
     public void cerrarConexion() {
         try {
             if (conexion != null && !conexion.isClosed()) {

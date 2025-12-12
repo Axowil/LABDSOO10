@@ -17,8 +17,12 @@ public class EmpleadoDAO {
         try {
             conn = conexion.getConnection();
             conn.setAutoCommit(false);
-            String sqlPersona = "INSERT INTO personas (dni, nombre, apellido, email, telefono, direccion, fecha_nacimiento) VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement stmtP = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
+            String sqlPersona =
+            "INSERT INTO personas (dni, nombre, apellido, email, telefono, direccion, fecha_nacimiento) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement stmtP = conn.prepareStatement(
+                sqlPersona,
+                Statement.RETURN_GENERATED_KEYS
+            );
             stmtP.setString(1, c.getDni());
             stmtP.setString(2, c.getNombre());
             stmtP.setString(3, c.getApellido());
@@ -30,7 +34,8 @@ public class EmpleadoDAO {
             ResultSet rs = stmtP.getGeneratedKeys();
             int idPersona = 0;
             if (rs.next()) idPersona = rs.getInt(1);
-            String sqlEmpleado = "INSERT INTO empleados (id_persona, cargo, departamento, salario, fecha_contratacion, turno) VALUES (?, ?, ?, ?, ?, ?)";
+            String sqlEmpleado =
+            "INSERT INTO empleados (id_persona, cargo, departamento, salario, fecha_contratacion, turno) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmtC = conn.prepareStatement(sqlEmpleado);
             stmtC.setInt(1, idPersona);
             stmtC.setString(2, c.getCargo());
@@ -47,7 +52,8 @@ public class EmpleadoDAO {
             e.printStackTrace();
             return false;
         } finally {
-            try { if (conn != null) conn.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
+            try { if (conn != null) conn.setAutoCommit(true); }
+            catch (SQLException ex) { ex.printStackTrace(); }
         }
     }
     public List<Empleado> listarTodos() {
@@ -85,7 +91,8 @@ public class EmpleadoDAO {
         return lista;
     }
     public Empleado buscarPorDni(String dni) {
-        String sql = "SELECT p.*, e.* FROM personas p JOIN empleados e ON p.id = e.id_persona WHERE p.dni = ?";
+        String sql =
+        "SELECT p.*, e.* FROM personas p JOIN empleados e ON p.id = e.id_persona WHERE p.dni = ?";
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, dni);

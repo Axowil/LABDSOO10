@@ -14,20 +14,25 @@ public class ClienteDAO {
         try {
             conn = conexion.getConnection();
             conn.setAutoCommit(false);
-            String sqlPersona = "INSERT INTO personas (dni, nombre, apellido, email, telefono, direccion, fecha_nacimiento) VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement stmtP = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
+            String sqlPersona =
+            "INSERT INTO personas (dni, nombre, apellido, email, telefono, direccion, fecha_nacimiento) VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement stmtP = conn.prepareStatement(
+                sqlPersona,
+                Statement.RETURN_GENERATED_KEYS
+            );
             stmtP.setString(1, c.getDni());
             stmtP.setString(2, c.getNombre());
             stmtP.setString(3, c.getApellido());
             stmtP.setString(4, c.getEmail());
             stmtP.setString(5, c.getTelefono());
             stmtP.setString(6, c.getDireccion());
-            stmtP.setDate(7, java.sql.Date.valueOf(c.getFechaNacimiento())); // Asumiendo que usas LocalDate
+            stmtP.setDate(7, java.sql.Date.valueOf(c.getFechaNacimiento()));
             stmtP.executeUpdate();
             ResultSet rs = stmtP.getGeneratedKeys();
             int idPersona = 0;
             if (rs.next()) idPersona = rs.getInt(1);
-            String sqlCliente = "INSERT INTO clientes (id_persona, calificacion_crediticia) VALUES (?, ?)";
+            String sqlCliente =
+            "INSERT INTO clientes (id_persona, calificacion_crediticia) VALUES (?, ?)";
             PreparedStatement stmtC = conn.prepareStatement(sqlCliente);
             stmtC.setInt(1, idPersona);
             stmtC.setString(2, c.getCategoria());
@@ -39,12 +44,14 @@ public class ClienteDAO {
             e.printStackTrace();
             return false;
         } finally {
-            try { if (conn != null) conn.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
+            try { if (conn != null) conn.setAutoCommit(true); }
+            catch (SQLException ex) { ex.printStackTrace(); }
         }
     }
     public List<Cliente> listarTodos() {
         List<Cliente> lista = new ArrayList<>();
-        String sql = "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona";
+        String sql =
+        "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona";
         try (Connection conn = conexion.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -69,7 +76,8 @@ public class ClienteDAO {
         return lista;
     }
     public Cliente buscarPorDni(String dni) {
-        String sql = "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona WHERE p.dni = ?";
+        String sql =
+        "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona WHERE p.dni = ?";
         try (Connection conn = conexion.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, dni);
@@ -91,7 +99,9 @@ public class ClienteDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return null;
     }
-    public static void actualizarCalificacionDB(String idCliente, String nuevaCalificacion) throws Exception {
+    public static void actualizarCalificacionDB(
+            String idCliente, String nuevaCalificacion
+        ) throws Exception {
         String SQL = "UPDATE clientes SET calificacion_crediticia = ? WHERE id_persona = ?";
         ConexionBD conexion = new ConexionBD();
         try (Connection conn = conexion.getConnection();
