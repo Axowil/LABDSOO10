@@ -3,17 +3,12 @@ package clasesDAO;
 import gestor.ConexionBD;
 import modelo.personas.Cliente;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 public class ClienteDAO {
     private ConexionBD conexion;
-
     public ClienteDAO() {
         this.conexion = new ConexionBD();
     }
-
-    // 1. Guardar un nuevo cliente (Insertar en PERSONAS y en CLIENTES)
     public boolean guardar(Cliente c) {
         Connection conn = null;
         try {

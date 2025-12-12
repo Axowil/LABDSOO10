@@ -1,7 +1,7 @@
 package presentacion;
 
 import gestor.*;
-import presentacion.administrador.FrmAgregarUsuarios;
+import presentacion.administrador.*;
 import presentacion.cliente.*;
 import presentacion.empleado.*;
 
@@ -57,7 +57,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         panelPrincipal.setBackground(new Color(231, 248, 255)); 
         
-        JLabel lblSubtitulo = new JLabel("Sistema Bancario - Laboratorio 09");
+        JLabel lblSubtitulo = new JLabel("Sistema Bancario - Laboratorio 10");
         lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblSubtitulo.setForeground(Color.GRAY);
         lblSubtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -79,7 +79,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             case "EMPLEADO":
                 agregarBoton(panelPrincipal, "Ver Lista de clientes", e -> abrirListaClientes());
                 agregarBoton(panelPrincipal, "Buscar por dni Cliente", e -> abrirBuscarClienteporDni());
-                agregarBoton(panelPrincipal, "Crear nuevo Cliente(Persona)", e -> abrirCrearCliente());
+                agregarBoton(panelPrincipal, "Agregar nuevo Cliente", e -> abrirCrearCliente());
                 agregarBoton(panelPrincipal, "Crear usuario de cliente", e -> abrirCrearUsuarioCliente());
                 agregarBoton(panelPrincipal, "Eliminar usuario de cliente", e -> abrirEliminarUsuarioCliente());
                 agregarBoton(panelPrincipal, "Crear Cuenta de Ahorros ", e -> abrirCrearCuentaAhorros());
@@ -91,25 +91,24 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 break;
                 
             case "ADMINISTRADOR":
-    agregarLabelSeccion(panelPrincipal, "Administración del sistema");
-    agregarBoton(panelPrincipal, "Gestionar Usuarios", e -> abrirGestionUsuarios());
-    agregarBoton(panelPrincipal, "Crear nuevo Cliente(Persona)", e -> abrirCrearCliente());
-    agregarBoton(panelPrincipal, "Agregar Usuarios", e -> abrirAgregarUsuarios());
-    agregarBoton(panelPrincipal, "Gestionar Empleados", e -> abrirGestionEmpleados());
-    agregarBoton(panelPrincipal, "Gestión Completa del Sistema", e -> abrirGestionCompleta());
-    agregarBoton(panelPrincipal, "Reportes y Estadísticas", e -> abrirReportesAdmin());
-    agregarBoton(panelPrincipal, "Auditoría del Sistema", e -> abrirAuditoria());
-    
-    agregarLabelSeccion(panelPrincipal, "Gestión operativa");
-    agregarBoton(panelPrincipal, "Crear Cuenta de Ahorros", e -> abrirCrearCuentaAhorros());
-    agregarBoton(panelPrincipal, "Crear Cuenta Corriente", e -> abrirCrearCuentaCorriente());
-    agregarBoton(panelPrincipal, "Depositar para cliente", e -> abrirDepositarparaCliente());
-    agregarBoton(panelPrincipal, "Retirar para cliente", e -> abrirRetiroparaCliente());
-    agregarBoton(panelPrincipal, "Transferencia para cliente", e -> abrirTransferenciaCliente());
-    agregarBoton(panelPrincipal, "Eliminar cuenta de cliente", e -> abrirEliminarCuentaCliente());
-    break;
-
-
+                agregarLabelSeccion(panelPrincipal, "Administración del sistema");
+                agregarBoton(panelPrincipal, "Agregar nuevo Cliente", e -> abrirCrearCliente());
+                agregarBoton(panelPrincipal, "Agregar nuevo Empleado", e -> abrirCrearEmpleado());
+                agregarBoton(panelPrincipal, "Agregar Usuarios", e -> abrirAgregarUsuarios());
+                //gestion cliente
+                agregarBoton(panelPrincipal, "Gestionar Empleados", e -> abrirGestionEmpleados());
+                agregarBoton(panelPrincipal, "Gestionar Usuarios", e -> abrirGestionUsuarios());
+                agregarBoton(panelPrincipal, "Gestión Completa del Sistema", e -> abrirGestionCompleta());
+                agregarBoton(panelPrincipal, "Reportes y Estadísticas", e -> abrirReportesAdmin());
+                agregarBoton(panelPrincipal, "Auditoría del Sistema", e -> abrirAuditoria());
+                agregarLabelSeccion(panelPrincipal, "Gestión operativa");
+                agregarBoton(panelPrincipal, "Crear Cuenta de Ahorros", e -> abrirCrearCuentaAhorros());
+                agregarBoton(panelPrincipal, "Crear Cuenta Corriente", e -> abrirCrearCuentaCorriente());
+                agregarBoton(panelPrincipal, "Depositar para cliente", e -> abrirDepositarparaCliente());
+                agregarBoton(panelPrincipal, "Retirar para cliente", e -> abrirRetiroparaCliente());
+                agregarBoton(panelPrincipal, "Transferencia para cliente", e -> abrirTransferenciaCliente());
+                agregarBoton(panelPrincipal, "Eliminar cuenta de cliente", e -> abrirEliminarCuentaCliente());
+                break;
         }
         
         panelPrincipal.add(Box.createVerticalGlue());
@@ -205,7 +204,9 @@ private void mostrarMisCuentas() {
     private void abrirCrearCliente() {
         new FrmCrearCliente().setVisible(true);
     }
-
+    private void abrirCrearEmpleado() {
+        new FrmCrearEmpleado().setVisible(true);
+    }
     private void abrirCrearCuentaAhorros() {
         new FrmCrearCuentaAhorros().setVisible(true);
     }

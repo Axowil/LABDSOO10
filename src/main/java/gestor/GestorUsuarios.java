@@ -4,7 +4,6 @@ import clasesDAO.ClienteDAO;
 import clasesDAO.UsuarioDAO;
 import modelo.personas.*;
 import java.util.List;
-import java.util.ArrayList;
 import clasesDAO.EmpleadoDAO;
 
 public class GestorUsuarios {
@@ -107,6 +106,9 @@ public class GestorUsuarios {
     }
 
     // --- MÉTODOS DE EMPLEADOS (Stubs para compatibilidad) ---
+    public boolean agregarEmpleado(Empleado empleado) {
+        return empleadoDAO.guardar(empleado);
+    }
     public List<Empleado> getEmpleados() {
         return empleadoDAO.listarTodos(); // <--- Ahora consulta la BD
     }

@@ -1,4 +1,4 @@
-package presentacion.empleado;
+package presentacion.administrador;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import presentacion.MainGUI;
 import gestor.GestorUsuarios;
 
-public class FrmCrearCliente extends JFrame {
+public class FrmCrearEmpleado extends JFrame {
     private JTextField txtNombre, txtApellido, txtDni, txtEmail, txtTelefono, txtDireccion;
     private JButton btnCrear;
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
@@ -14,8 +14,8 @@ public class FrmCrearCliente extends JFrame {
     private static final Pattern DNI_VALIDO = Pattern.compile("^\\d{8}$");
     private static final Pattern CREDENCIALES_VALIDAS = Pattern.compile("^[a-z A-Z]{3,50}$");
 
-    public FrmCrearCliente() {
-        setTitle("Crear Cliente");
+    public FrmCrearEmpleado() {
+        setTitle("Crear Empleado");
         setSize(400, 350);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -96,26 +96,27 @@ public class FrmCrearCliente extends JFrame {
 
         try {
             GestorUsuarios gestorUsuarios = MainGUI.getGestorBanco().getGestorUsuarios();
-            String idCliente = String.format("CLI%03d", gestorUsuarios.getClientes().size() + 1);
-            String categoria = "Regular";
-            double limiteCredito = 1000.0;
-
-            modelo.personas.Cliente cliente = new modelo.personas.Cliente(
-                dni, nombre, apellido, email, telefono, 
-                java.time.LocalDate.now(), direccion, 
-                idCliente, categoria, limiteCredito
+            String idEmpleado = String.format("CLI%03d", gestorUsuarios.getClientes().size() + 1);
+            String cargo = "Cajero";
+            String departamento = "Atencion al Cliente";
+            double salario = 2500.0;
+            String turno = "Mañana";
+            modelo.personas.Empleado empleado = new modelo.personas.Empleado(
+                dni, nombre, apellido, email, telefono,
+                java.time.LocalDate.now(), direccion,
+                idEmpleado, cargo, departamento, salario, turno
             );
             
-            boolean creado = gestorUsuarios.agregarCliente(cliente);
+            boolean creado = gestorUsuarios.agregarEmpleado(empleado);
 
             if (creado) {
-                JOptionPane.showMessageDialog(this, "Cliente creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Empleado creado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
             } else {
-                JOptionPane.showMessageDialog(this, "Ya existe un cliente con ese DNI.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Ya existe un empleado con ese DNI.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al crear cliente: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al crear empleado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
