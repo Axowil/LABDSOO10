@@ -102,25 +102,19 @@ public class GestorUsuarios {
     }
     
     public Cliente buscarClientePorDni(String dni) {
-        return buscarCliente(dni);
+        return clienteDAO.buscarPorDni(dni);
     }
-
-    // --- MÉTODOS DE EMPLEADOS (Stubs para compatibilidad) ---
     public boolean agregarEmpleado(Empleado empleado) {
         return empleadoDAO.guardar(empleado);
     }
     public List<Empleado> getEmpleados() {
-        return empleadoDAO.listarTodos(); // <--- Ahora consulta la BD
+        return empleadoDAO.listarTodos();
     }
     
     public Empleado buscarEmpleado(String dni) {
-        return null; // Implementar búsqueda en BD
+        return empleadoDAO.buscarPorDni(dni);
     }
-    
-    // Método auxiliar para FrmGestionUsuarios
-        // En gestor/GestorUsuarios.java
-
     public java.util.List<modelo.personas.Usuario> getUsuarios() {
-        return usuarioDAO.listarTodos(); // <--- Antes devolvía lista vacía, ahora consulta BD
+        return usuarioDAO.listarTodos();
     }
 }

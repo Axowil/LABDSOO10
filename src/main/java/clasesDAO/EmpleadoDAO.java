@@ -1,7 +1,7 @@
 package clasesDAO;
 
 import gestor.ConexionBD;
-import modelo.personas.Empleado;
+import modelo.personas.*;
 import java.sql.*;
 import java.util.*;
 import java.time.LocalDate;
@@ -84,4 +84,30 @@ public class EmpleadoDAO {
         }
         return lista;
     }
+    public Empleado buscarPorDni(String dni) {
+        String sql = "SELECT p.*, e.* FROM personas p JOIN empleados e ON p.id = e.id_persona WHERE p.dni = ?";
+        try (Connection conn = conexion.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, dni);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Empleado(
+                    rs.getString("dni"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("email"),
+                    rs.getString("telefono"),
+                    rs.getDate("fecha_nacimiento").toLocalDate(),
+                    rs.getString("direccion"),
+                    "CLI-"+rs.getInt("id"),
+                    rs.getString("cargo"),
+                    rs.getString("departamento"),
+                    rs.getDouble("salario"),
+                    rs.getString("turno")
+                );
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return null;
+    }
+
 }

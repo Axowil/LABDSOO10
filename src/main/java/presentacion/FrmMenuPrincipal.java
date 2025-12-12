@@ -267,7 +267,6 @@ private void abrirAgregarUsuarios() {
 }
     
     private void abrirAuditoria() {
-        // Auditoría en un área de texto
         JTextArea textArea = new JTextArea();
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         textArea.setEditable(false);

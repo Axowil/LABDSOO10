@@ -13,9 +13,7 @@ public class ClienteDAO {
         Connection conn = null;
         try {
             conn = conexion.getConnection();
-            conn.setAutoCommit(false); // Transacción
-
-            // A. Insertar Persona
+            conn.setAutoCommit(false);
             String sqlPersona = "INSERT INTO personas (dni, nombre, apellido, email, telefono, direccion, fecha_nacimiento) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement stmtP = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
             stmtP.setString(1, c.getDni());
@@ -26,19 +24,14 @@ public class ClienteDAO {
             stmtP.setString(6, c.getDireccion());
             stmtP.setDate(7, java.sql.Date.valueOf(c.getFechaNacimiento())); // Asumiendo que usas LocalDate
             stmtP.executeUpdate();
-
-            // Obtener ID generado
             ResultSet rs = stmtP.getGeneratedKeys();
             int idPersona = 0;
             if (rs.next()) idPersona = rs.getInt(1);
-
-            // B. Insertar Cliente
             String sqlCliente = "INSERT INTO clientes (id_persona, calificacion_crediticia) VALUES (?, ?)";
             PreparedStatement stmtC = conn.prepareStatement(sqlCliente);
             stmtC.setInt(1, idPersona);
-            stmtC.setString(2, c.getCategoria()); // o "NORMAL" por defecto
+            stmtC.setString(2, c.getCategoria());
             stmtC.executeUpdate();
-
             conn.commit();
             return true;
         } catch (SQLException e) {
@@ -49,19 +42,13 @@ public class ClienteDAO {
             try { if (conn != null) conn.setAutoCommit(true); } catch (SQLException ex) { ex.printStackTrace(); }
         }
     }
-
-    // 2. Listar todos los clientes
     public List<Cliente> listarTodos() {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona";
-        
         try (Connection conn = conexion.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            
             while(rs.next()) {
-                // Reconstruir cliente
-                // OJO: Ajusta el constructor según tu clase Cliente.java
                 Cliente c = new Cliente(
                     rs.getString("dni"),
                     rs.getString("nombre"),
@@ -70,9 +57,9 @@ public class ClienteDAO {
                     rs.getString("telefono"),
                     rs.getDate("fecha_nacimiento").toLocalDate(),
                     rs.getString("direccion"),
-                    "CLI-"+rs.getInt("id"), // ID generado
+                    "CLI-"+rs.getInt("id"),
                     rs.getString("calificacion_crediticia"),
-                    1000.0 // Límite crédito dummy
+                    1000.0
                 );
                 lista.add(c);
             }
@@ -81,8 +68,6 @@ public class ClienteDAO {
         }
         return lista;
     }
-
-    // 3. Buscar por DNI
     public Cliente buscarPorDni(String dni) {
         String sql = "SELECT p.*, c.calificacion_crediticia FROM personas p JOIN clientes c ON p.id = c.id_persona WHERE p.dni = ?";
         try (Connection conn = conexion.getConnection();
