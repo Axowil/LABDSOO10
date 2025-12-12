@@ -91,4 +91,20 @@ public class ClienteDAO {
         } catch (SQLException e) { e.printStackTrace(); }
         return null;
     }
+    public static void actualizarCalificacionDB(String idCliente, String nuevaCalificacion) throws Exception {
+        String SQL = "UPDATE clientes SET calificacion_crediticia = ? WHERE id_persona = ?";
+        ConexionBD conexion = new ConexionBD();
+        try (Connection conn = conexion.getConnection();
+             PreparedStatement ps = conn.prepareStatement(SQL)) {
+            
+            ps.setString(1, nuevaCalificacion);
+            ps.setString(2, idCliente);
+            
+            int filasAfectadas = ps.executeUpdate();
+            
+            if (filasAfectadas == 0) {
+                throw new Exception("No se encontró el cliente con ID: " + idCliente);
+            }
+        }
+    }
 }

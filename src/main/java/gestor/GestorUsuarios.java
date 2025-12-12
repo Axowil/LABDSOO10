@@ -117,4 +117,7 @@ public class GestorUsuarios {
     public java.util.List<modelo.personas.Usuario> getUsuarios() {
         return usuarioDAO.listarTodos();
     }
+    public void actualizarCalificacion(String idCliente, String nuevaCalificacion) throws Exception {
+        ClienteDAO.actualizarCalificacionDB(idCliente, nuevaCalificacion);
+    }
 }

@@ -1,6 +1,6 @@
 package gestor;
 
-import clasesDAO.*; // Importante para ver los DAOs
+import clasesDAO.*;
 import modelo.cuentas.*;
 import modelo.transacciones.*;
 import modelo.personas.*;

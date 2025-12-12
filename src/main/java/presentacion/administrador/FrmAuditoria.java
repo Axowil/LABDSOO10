@@ -1,13 +1,10 @@
 package presentacion.administrador;
 
-import gestor.GestorBanco;
-import gestor.GestorUsuarios;
+import gestor.*;
 import modelo.transacciones.Transaccion;
 import presentacion.MainGUI;
 import modelo.personas.Usuario;
-import modelo.cuentas.Cuenta;
-import modelo.cuentas.CuentaAhorros;
-import modelo.cuentas.CuentaCorriente;
+import modelo.cuentas.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,17 +75,12 @@ public class FrmAuditoria extends JFrame {
         btnCerrar.addActionListener(e -> dispose());
         panelBotones.add(btnCerrar);
         
-        // Organizar
         panelPrincipal.add(lblTitulo, BorderLayout.NORTH);
         panelPrincipal.add(scrollAuditoria, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
         
         add(panelPrincipal);
     }
-    
-    /**
-     * Genera el reporte de auditoría completo.
-     */
     private void generarReporteAuditoria() {
         StringBuilder auditoria = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -161,8 +153,7 @@ public class FrmAuditoria extends JFrame {
             }
             auditoria.append("\n");
         }
-        
-        // 5. RESUMEN DE CUENTAS
+
         auditoria.append("═══════════════════════════════════════════════════════════════════════\n");
         auditoria.append("                    5. RESUMEN DE CUENTAS\n");
         auditoria.append("═══════════════════════════════════════════════════════════════════════\n\n");
@@ -181,21 +172,15 @@ public class FrmAuditoria extends JFrame {
         auditoria.append(String.format("• Cuentas Activas:           %,d\n", activas));
         auditoria.append(String.format("• Cuentas de Ahorros:        %,d\n", ahorros));
         auditoria.append(String.format("• Cuentas Corriente:         %,d\n\n", corriente));
-        
-        // 6. ALERTAS Y ANOMALÍAS
         auditoria.append("═══════════════════════════════════════════════════════════════════════\n");
         auditoria.append("                    6. ALERTAS Y ANOMALÍAS\n");
         auditoria.append("═══════════════════════════════════════════════════════════════════════\n\n");
-        
-        // Verificar cuentas con saldo negativo
         long cuentasNegativas = gestorBanco.getCuentas().stream()
             .filter(c -> c.getSaldo() < 0).count();
         
         if (cuentasNegativas > 0) {
             auditoria.append(String.format("  ALERTA: Encontradas %,d cuenta(s) con saldo negativo.\n\n", cuentasNegativas));
         }
-        
-        // Verificar usuarios sin actividad (inactivos)
         if (inactivos > 0) {
             auditoria.append(String.format("  ADVERTENCIA: Existen %,d usuario(s) inactivos.\n\n", inactivos));
         }
@@ -207,18 +192,12 @@ public class FrmAuditoria extends JFrame {
         txtAuditoria.setText(auditoria.toString());
         txtAuditoria.setCaretPosition(0);
     }
-    
-    /**
-     * Exporta el log de auditoría a un archivo (simulado).
-     */
     private void exportarLog() {
-
-        String reporte = txtAuditoria.getText();
-        JOptionPane.showMessageDialog(this, 
+        JOptionPane.showMessageDialog(this,
             " Función de Exportación\n\n" +
             "En una implementación real, esto guardaría el reporte en:\n" +
             "auditoria/logs/auditoria_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".txt\n\n" +
-            "Reporte generado con éxito. (Simulado)", 
+            "Reporte generado con éxito. (Simulado)",
             "Exportar Log", JOptionPane.INFORMATION_MESSAGE);
     }
 }

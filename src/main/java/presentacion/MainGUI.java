@@ -1,6 +1,4 @@
 package presentacion;
-import gestor.ConexionBD;
-import java.sql.Connection;
 import gestor.GestorBanco;
 import javax.swing.SwingUtilities;
 
@@ -14,9 +12,6 @@ public class MainGUI {
         return gestorBanco;
     }
     public static void main(String[] args) {
-        ConexionBD bd = new ConexionBD();
-        Connection cn = bd.getConnection();
-        // Ejecutar en el Event Dispatch Thread de Swing
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -27,10 +22,9 @@ public class MainGUI {
                 } catch (Exception e) {
                     System.err.println("No se pudo aplicar el tema del sistema: " + e.getMessage());
                 }
-                // Mostrar ventana de login
                 FrmLogin login = new FrmLogin();
                 login.setVisible(true);
-                login.setLocationRelativeTo(null); // Centrar en pantalla
+                login.setLocationRelativeTo(null);
                 System.out.println("Aplicación GUI iniciada correctamente");
             }
         });

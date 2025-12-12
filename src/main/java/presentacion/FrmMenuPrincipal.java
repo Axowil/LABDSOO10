@@ -95,7 +95,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 agregarBoton(panelPrincipal, "Agregar nuevo Cliente", e -> abrirCrearCliente());
                 agregarBoton(panelPrincipal, "Agregar nuevo Empleado", e -> abrirCrearEmpleado());
                 agregarBoton(panelPrincipal, "Agregar Usuarios", e -> abrirAgregarUsuarios());
-                //gestion cliente
+                agregarBoton(panelPrincipal, "Gestionar Clientes", e -> abrirGestionClientes());
                 agregarBoton(panelPrincipal, "Gestionar Empleados", e -> abrirGestionEmpleados());
                 agregarBoton(panelPrincipal, "Gestionar Usuarios", e -> abrirGestionUsuarios());
                 agregarBoton(panelPrincipal, "Gestión Completa del Sistema", e -> abrirGestionCompleta());
@@ -244,27 +244,26 @@ private void abrirCrearUsuarioCliente() {
 }
     
     // =============== MÉTODOS PARA ADMINISTRADOR ===============
-
+    private void abrirGestionClientes() {
+        new presentacion.administrador.FrmGestionClientes().setVisible(true);
+    }
+    private void abrirGestionEmpleados() {
+        new presentacion.administrador.FrmGestionEmpleados().setVisible(true);
+    }
     private void abrirGestionUsuarios() {
-    new presentacion.administrador.FrmGestionUsuarios().setVisible(true);
-}
+        new presentacion.administrador.FrmGestionUsuarios().setVisible(true);
+    }
+        private void abrirGestionCompleta() {
+        new presentacion.administrador.FrmGestionCompletaAdmin().setVisible(true);
+    }
 
-    
-private void abrirGestionEmpleados() {
-    new presentacion.administrador.FrmGestionEmpleados().setVisible(true);
-}
-    
-    private void abrirGestionCompleta() {
-    new presentacion.administrador.FrmGestionCompletaAdmin().setVisible(true);
-}
-    
-   private void abrirReportesAdmin() {
-    new presentacion.administrador.FrmReportesAdministrador().setVisible(true);
-}
-private void abrirAgregarUsuarios() {
-    FrmAgregarUsuarios frmAgregar = new FrmAgregarUsuarios(gestorUsuarios);
-    frmAgregar.setVisible(true);
-}
+       private void abrirReportesAdmin() {
+        new presentacion.administrador.FrmReportesAdministrador().setVisible(true);
+    }
+    private void abrirAgregarUsuarios() {
+        FrmAgregarUsuarios frmAgregar = new FrmAgregarUsuarios(gestorUsuarios);
+        frmAgregar.setVisible(true);
+    }
     
     private void abrirAuditoria() {
         JTextArea textArea = new JTextArea();
