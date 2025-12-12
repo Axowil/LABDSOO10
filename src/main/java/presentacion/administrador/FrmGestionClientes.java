@@ -1,13 +1,11 @@
 package presentacion.administrador;
 
-import gestor.ConexionBD;
 import gestor.GestorBanco;
 import presentacion.MainGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.*;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
