@@ -56,6 +56,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         panelPrincipal.setBackground(new Color(231, 248, 255)); 
+
+        JLabel lblTitulo = new JLabel("🏦 " + tipoUsuario);
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        lblTitulo.setForeground(new Color(41, 128, 185));
+        lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelPrincipal.add(lblTitulo);
         
         JLabel lblSubtitulo = new JLabel("Sistema Bancario - Laboratorio 10");
         lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 14));

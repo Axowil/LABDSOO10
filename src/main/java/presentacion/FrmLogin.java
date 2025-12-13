@@ -11,9 +11,9 @@ public class FrmLogin extends javax.swing.JFrame {
     private GestorBanco gestorBanco;
     private GestorUsuarios gestorUsuarios;
     
-    private final Color COLOR_PRIMARY = new Color(41, 128, 185); //azul Oceano
-    private final Color COLOR_SUCCESS = new Color(46, 204, 113); //verde
-    private final Color COLOR_DANGER = new Color(231, 76, 60); //flame red
+    private final Color COLOR_PRIMARY = new Color(41, 128, 185); 
+    private final Color COLOR_SUCCESS = new Color(46, 204, 113); 
+    private final Color COLOR_DANGER = new Color(231, 76, 60); 
     private final Color COLOR_DARK = new Color(44, 62, 80);
     private final Color COLOR_WHITE = Color.WHITE;
     
@@ -25,9 +25,9 @@ public class FrmLogin extends javax.swing.JFrame {
     }
 
     private void configurarVentana() {
-        setTitle("Inicio de Sesión");
+        setTitle("Sistema bancario -- Inicio de Sesion");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 600);
+        setSize(850, 600);
         setResizable(false);
         setLocationRelativeTo(null);
         setUndecorated(false); 
@@ -35,14 +35,83 @@ public class FrmLogin extends javax.swing.JFrame {
     
     private void initComponents() {
         
-
         JPanel panelPrincipal = new JPanel(new BorderLayout());
+        
         panelPrincipal.setBackground(COLOR_WHITE);
+
+        JPanel panelIzquierdo = crearPanelIzquierdo();
+        panelIzquierdo.setPreferredSize(new Dimension(380, 600));
+        panelPrincipal.add(panelIzquierdo, BorderLayout.WEST);
+
         JPanel panelDerecho = crearPanelFormulario();
+        panelDerecho.setPreferredSize(new Dimension(470, 600));
         panelPrincipal.add(panelDerecho, BorderLayout.CENTER);
+
         setContentPane(panelPrincipal);
     }
     
+    private JPanel crearPanelIzquierdo() {
+    JPanel panel = new JPanel();
+    panel.setBackground(COLOR_PRIMARY);
+    panel.setPreferredSize(new Dimension(350, 600));
+    panel.setLayout(new GridBagLayout());
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.insets = new Insets(10, 30, 10, 30);
+    
+    // Icono del banco
+    JLabel lblIcono = new JLabel();
+    try {
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("imagen_banco.png"));
+        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        lblIcono.setIcon(new ImageIcon(imagenEscalada));
+    } catch (Exception e) {
+        lblIcono.setText("🏛");
+        lblIcono.setFont(new Font("Segoe UI", Font.PLAIN, 80));
+        lblIcono.setForeground(COLOR_WHITE);
+    }
+    lblIcono.setHorizontalAlignment(SwingConstants.CENTER);
+    gbc.gridy = 0;
+    gbc.insets = new Insets(60, 30, 20, 30);
+    panel.add(lblIcono, gbc);
+    
+    // Título
+    JLabel lblTitulo = new JLabel("NeoBank");
+    lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 32));
+    lblTitulo.setForeground(COLOR_WHITE);
+    lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+    gbc.gridy = 1;
+    gbc.insets = new Insets(10, 30, 5, 30);
+    panel.add(lblTitulo, gbc);
+    
+    JLabel lblSubtitulo = new JLabel("Banca digital segura");
+    lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+    lblSubtitulo.setForeground(new Color(236, 240, 241));
+    lblSubtitulo.setHorizontalAlignment(SwingConstants.CENTER);
+    gbc.gridy = 2;
+    gbc.insets = new Insets(5, 30, 40, 30);
+    panel.add(lblSubtitulo, gbc);
+    
+    // Descripción
+    JTextArea txtDescripcion = new JTextArea();
+    txtDescripcion.setText("Consulta saldos, realiza\n" +
+                      "transferencias, gestiona\n" +
+                      "cuentas y mucho más\n" +
+                      "desde un solo lugar.");
+    txtDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+    txtDescripcion.setForeground(new Color(236, 240, 241));
+    txtDescripcion.setBackground(COLOR_PRIMARY);
+    txtDescripcion.setEditable(false);
+    txtDescripcion.setFocusable(false);
+    txtDescripcion.setLineWrap(true);
+    txtDescripcion.setWrapStyleWord(true);
+    txtDescripcion.setBorder(null);
+    gbc.gridy = 3;
+    gbc.insets = new Insets(10, 30, 60, 30);
+    panel.add(txtDescripcion, gbc);
+    
+    return panel;
+}
 
     private JPanel crearPanelFormulario() {
         JPanel panel = new JPanel();
